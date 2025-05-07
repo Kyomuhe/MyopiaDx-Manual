@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyopiaDX: User Manual</title>
+    <style>
+        :root {
+            --primary-color: #3a7bd5;
+            --secondary-color: #00d2ff;
+            --dark-color: #2c3e50;
+            --light-color: #f5f7fa;
+            --accent-color: #16a085;
+            --danger-color: #e74c3c;
+            --text-color: #333;
+            --sidebar-width: 280px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 1rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .nav-list {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            color: var(--dark-color);
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--dark-color);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-box {
+            background-color: rgba(58, 123, 213, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .danger-box {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid var(--danger-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .screenshot {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #eee;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 1rem;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: rgba(58, 123, 213, 0.1);
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: rgba(245, 247, 250, 0.5);
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                padding: 1rem;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .topbar {
+            display: none;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .topbar {
+                display: block;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f1f1f1;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <button class="menu-toggle">☰</button>
+        <div class="logo-text">MyopiaDx Manual</div>
+    </div>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-img">👁️</div>
+                <div class="logo-text">MyopiaDX</div>
+            </div>
+            
+            <nav>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#introduction" class="nav-link active">Introduction</a></li>
+                    <li class="nav-item"><a href="#getting-started" class="nav-link">Getting Started</a></li>
+                    <li class="nav-item"><a href="#dashboard-overview" class="nav-link">Dashboard Overview</a></li>
+                    <li class="nav-item"><a href="#patient-management" class="nav-link">Patient Management</a></li>
+                    <li class="nav-item"><a href="#diagnostic-process" class="nav-link">Diagnostic Process</a></li>
+                    <li class="nav-item"><a href="#results-reporting" class="nav-link">Results & Reporting</a></li>
+                    <li class="nav-item"><a href="#recommendations" class="nav-link">Recommendations</a></li>
+                    <li class="nav-item"><a href="#troubleshooting" class="nav-link">Troubleshooting</a></li>
+                    <li class="nav-item"><a href="#support-contact" class="nav-link">Support & Contact</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <section id="introduction" class="section">
+                <h1>MyopiaAI: Pathological Myopia Diagnosis System</h1>
+                
+                <p>Welcome to MyopiaAI, an advanced artificial intelligence system designed to assist healthcare professionals in diagnosing pathological myopia. This user manual provides comprehensive guidance on using the system effectively, from logging in to generating diagnostic reports.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3 class="feature-title">AI-Powered Analysis</h3>
+                        <p>Fast and accurate analysis of fundus and FANTAS images with advanced deep learning algorithms.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3 class="feature-title">Patient Management</h3>
+                        <p>Comprehensive patient record management with secure data storage and easy access.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3 class="feature-title">Detailed Reporting</h3>
+                        <p>Generate professional diagnostic reports with detailed findings and visualizations.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3 class="feature-title">Statistical Analysis</h3>
+                        <p>Track and analyze diagnostic trends across demographics and severity levels.</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><strong>Important:</strong> This system is intended for use by qualified medical professionals only. The AI provides decision support but does not replace clinical judgment.</p>
+                </div>
+            </section>
+
+            <section id="getting-started" class="section">
+                <h2>Getting Started</h2>
+                
+                <h3>System Requirements</h3>
+                <ul>
+                    <li>Modern web browser (Chrome, Firefox, Safari, Edge - latest versions)</li>
+                    <li>Stable internet connection</li>
+                    <li>Minimum screen resolution of 1280x720</li>
+                </ul>
+                
+                <h3>Accessing the System</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <p>Open your web browser and navigate to the MyopiaAI login page.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <p>Enter your credentials:</p>
+                        <ul>
+                            <li>Username</li>
+                            <li>Password</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <p>Click "Login" to access the system.</p>
+                    </div>
+                </div>
+                
+                <img src="/api/placeholder/800/400" alt="Login Screen" class="screenshot">
+                
+                <h3>First-Time Login</h3>
+                <p>If this is your first time logging in:</p>
+                <ol>
+                    <li>Use the temporary credentials provided by your administrator</li>
+                    <li>You will be prompted to change your password</li>
+                    <li>Create a new password following the security requirements:
+                        <ul>
+                            <li>Minimum 8 characters</li>
+                            <li>At least one uppercase letter</li>
+                            <li>At least one number</li>
+                            <li>At least one special character</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <h3>Password Recovery</h3>
+                <p>If you forget your password:</p>
+                <ol>
+                    <li>Click "Forgot Password" on the login screen</li>
+                    <li>Enter your registered email address</li>
+                    <li>Follow the instructions sent to your email to reset your password</li>
+                </ol>
+            </section>
+
+            <section id="dashboard-overview" class="section">
+                <h2>Dashboard Overview</h2>
+                
+                <p>After logging in, you will be presented with the dashboard, which serves as the main control center of the system.</p>
+                
+                <img src="/api/placeholder/800/500" alt="Dashboard Overview" class="screenshot">
+                
+                <h3>Key Dashboard Elements</h3>
+                
+                <h4>Statistics Panel</h4>
+                <p>This section displays key metrics and analytics:</p>
+                <ul>
+                    <li>Total patients diagnosed</li>
+                    <li>Diagnoses by gender</li>
+                    <li>Diagnoses by age groups</li>
+                    <li>Diagnoses by severity levels</li>
+                    <li>Diagnoses by religion (if applicable)</li>
+                    <li>Recent diagnostic activity</li>
+                </ul>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Statistic</th>
+                                <th>Description</th>
+                                <th>Display Format</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Gender Distribution</td>
+                                <td>Percentage breakdown of diagnoses by gender</td>
+                                <td>Pie chart</td>
+                            </tr>
+                            <tr>
+                                <td>Age Distribution</td>
+                                <td>Distribution of patient ages in diagnostic database</td>
+                                <td>Bar chart</td>
+                            </tr>
+                            <tr>
+                                <td>Severity Levels</td>
+                                <td>Breakdown of diagnoses by severity classification</td>
+                                <td>Donut chart</td>
+                            </tr>
+                            <tr>
+                                <td>Religious Demographics</td>
+                                <td>Optional breakdown by religious affiliation</td>
+                                <td>Pie chart</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h4>Quick Access Menu</h4>
+                <p>Located on the left side of the screen, this menu provides quick access to:</p>
+                <ul>
+                    <li>Patient Management</li>
+                    <li>New Diagnosis</li>
+                    <li>Reports Archive</li>
+                    <li>System Settings</li>
+                    <li>User Profile</li>
+                </ul>
+                
+                <h4>Notification Center</h4>
+                <p>Located in the top-right corner, this section displays:</p>
+                <ul>
+                    <li>System updates</li>
+                    <li>New results ready for review</li>
+                    <li>Administrative announcements</li>
+                </ul>
+                
+                <h4>Search Functionality</h4>
+                <p>A universal search bar allows you to quickly find:</p>
+                <ul>
+                    <li>Patients by name, ID, or other identifiers</li>
+                    <li>Previous diagnoses</li>
+                    <li>Specific reports</li>
+                </ul>
+                
+                <h3>Customizing Your Dashboard</h3>
+                <p>You can personalize your dashboard by:</p>
+                <ol>
+                    <li>Clicking the "Customize" button in the top-right corner</li>
+                    <li>Selecting which statistics to display</li>
+                    <li>Rearranging panels using drag-and-drop</li>
+                    <li>Saving your preferences</li>
+                </ol>
+                
+                <div class="highlight-box">
+                    <p><strong>Tip:</strong> Customize your dashboard to show the statistics most relevant to your clinical practice. Specialty clinics may want to focus on specific demographic information or severity metrics.</p>
+                </div>
+            </section>
+
+            <section id="patient-management" class="section">
+                <h2>Patient Management</h2>
+                
+                <h3>Adding a New Patient</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <p>Click "Add Patient" button on the dashboard or from the Quick Access Menu</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <p>Fill in the required patient information:</p>
+                        <ul>
+                            <li>Full name</li>
+                            <li>Date of birth</li>
+                            <li>Gender</li>
+                            <li>Contact information</li>
+                            <li>Medical record number (if applicable)</li>
+                            <li>Religion (if applicable)</li>
+                            <li>Existing medical conditions</li>
+                            <li>Current medications</li>
+                            <li>Family history of eye conditions</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <p>Click "Save" to create the patient record</p>
+                    </div>
+                </div>
+                
+                <img src="/api/placeholder/800/450" alt="Add Patient Form" class="screenshot">
+                
+                <h3>Searching for Existing Patients</h3>
+                <ol>
+                    <li>Use the search bar at the top of the dashboard</li>
+                    <li>Enter the patient's name, ID, or other identifier</li>
+                    <li>Click on the patient's name from the search results to access their profile</li>
+                </ol>
+                
+                <h3>Editing Patient Information</h3>
+                <ol>
+                    <li>Navigate to the patient's profile</li>
+                    <li>Click "Edit" in the patient information section</li>
+                    <li>Update the necessary fields</li>
+                    <li>Click "Save Changes"</li>
+                </ol>
+                
+                <h3>Patient Profile Overview</h3>
+                <p>Each patient profile includes:</p>
+                <ul>
+                    <li>Personal information</li>
+                    <li>Medical history</li>
+                    <li>Previous diagnoses and results</li>
+                    <li>Uploaded images</li>
+                    <li>Generated reports</li>
+                    <li>Recommended follow-ups</li>
+                </ul>
+                
+                <div class="danger-box">
+                    <p><strong>Important:</strong> Always verify patient identity before updating records or performing diagnostic procedures. Patient data is protected under applicable privacy laws and regulations.</p>
+                </div>
+            </section>
+
+            <section id="diagnostic-process" class="section">
+                <h2>Diagnostic Process</h2>
+                
+                <h3>Initiating a New Diagnosis</h3>
+                <ol>
+                    <li>Navigate to the patient's profile</li>
+                    <li>Click "New Diagnosis" button</li>
+                    <li>Select the type of diagnosis to perform</li>
+                </ol>
+                
+                <h3>Uploading Images</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <p>In the diagnosis screen, click "Upload Images"</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <p>Select the FANTAS image files from your computer</p>
+                        <ul>
+                            <li>Accepted formats: JPEG, PNG, DICOM</li>
+                            <li>Maximum file size: 20MB per image</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <p>Ensure the images are clear and properly oriented</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <p>Add any relevant notes about the images</p>
+                    </div>
+                </div>
+                
+                <img src="/api/placeholder/800/400" alt="Image Upload Interface" class="screenshot">
+                
+                <h3>Image Quality Requirements</h3>
+                <p>For optimal diagnostic accuracy:</p>
+                <ul>
+                    <li>Images should be well-focused</li>
+                    <li>Proper lighting should be used</li>
+                    <li>Standard imaging protocols should be followed</li>
+                    <li>Patient information should be correctly associated with the images</li>
+                </ul>
+                
+                <div class="highlight-box">
+                    <p><strong>Tip:</strong> The AI system performs best with high-quality images. Poor image quality may result in lower confidence scores or diagnostic errors.</p>
+                </div>
+                
+                <h3>Initiating the AI Analysis</h3>
+                <ol>
+                    <li>Once images are uploaded, review them for quality and completeness</li>
+                    <li>Click "Start Analysis" button</li>
+                    <li>The system will display a progress indicator while the AI processes the images</li>
+                    <li>Wait for the analysis to complete (typically 1-3 minutes depending on image complexity)</li>
+                </ol>
+            </section>
+
+            <section id="results-reporting" class="section">
+                <h2>Results and Reporting</h2>
+                
+                <h3>Viewing Diagnostic Results</h3>
+                <p>Once the AI analysis is complete:</p>
+                <ol>
+                    <li>The system will display a summary of findings</li>
+                    <li>Detailed results will be presented with:
+                        <ul>
+                            <li>Diagnosis classification</li>
+                            <li>Confidence scores</li>
+                            <li>Highlighted areas of concern on the images</li>
+                            <li>Comparison with reference images</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <img src="/api/placeholder/800/450" alt="Diagnostic Results Screen" class="screenshot">
+                
+                <h3>Understanding the Diagnosis</h3>
+                <p>The system categorizes pathological myopia findings into:</p>
+                <ul>
+                    <li>Severity levels (Mild, Moderate, Severe)</li>
+                    <li>Specific conditions detected</li>
+                    <li>Risk factors identified</li>
+                    <li>Progression indicators</li>
+                </ul>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Severity Level</th>
+                                <th>Characteristics</th>
+                                <th>Typical Findings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mild</td>
+                                <td>Early signs of pathological changes</td>
+                                <td>Minimal retinal thinning, early tessellation</td>
+                            </tr>
+                            <tr>
+                                <td>Moderate</td>
+                                <td>Established pathological changes</td>
+                                <td>Posterior staphyloma, chorioretinal atrophy</td>
+                            </tr>
+                            <tr>
+                                <td>Severe</td>
+                                <td>Advanced degenerative changes</td>
+                                <td>Lacquer cracks, Fuchs spot, CNV</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>Generating Reports</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <p>Review the AI-generated results</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <p>Click "Generate Report" button</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <p>Select the report format (Detailed Clinical Report, Summary Report, Patient Information Sheet)</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <p>Add any additional notes or observations</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <p>Click "Create PDF"</p>
+                    </div>
+                </div>
+                
+                <h3>Downloading and Sharing Reports</h3>
+                <ol>
+                    <li>Once the PDF is generated, click "Download" to save it locally</li>
+                    <li>To share the report:
+                        <ul>
+                            <li>Click "Share" button</li>
+                            <li>Enter recipient's email or select from system users</li>
+                            <li>Add a brief message (optional)</li>
+                            <li>Click "Send"</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <h3>Report Archives</h3>
+                <p>All generated reports are automatically archived and can be accessed:</p>
+                <ul>
+                    <li>From the patient's profile under "Reports" tab</li>
+                    <li>From the dashboard's "Reports Archive" section</li>
+                    <li>Via the search function using patient name or report date</li>
+                </ul>
+            </section>
+
+            <section id="recommendations" class="section">
+                <h2>Recommendations</h2>
+                
+                <h3>AI-Generated Recommendations</h3>
+                <p>Based on the diagnostic results, the system provides:</p>
+                <ul>
+                    <li>Treatment suggestions</li>
+                    <li>Follow-up scheduling recommendations</li>
+                    <li>Referral suggestions to specialists</li>
+                    <li>Patient education materials</li>
+                </ul>
+                
+                <img src="/api/placeholder/800/400" alt="Recommendations Interface" class="screenshot">
+                
+                <h3>Customizing Recommendations</h3>
+                <ol>
+                    <li>Review the AI-generated recommendations</li>
+                    <li>Click "Edit Recommendations" to modify or add to the suggestions</li>
+                    <li>Save your changes</li>
+                    <li>These custom recommendations will be included in the final report</li>
+                </ol>
+                
+                <div class="highlight-box">
+                    <p><strong>Note:</strong> The AI provides recommendations based on current medical guidelines and research, but clinical judgment should always take precedence.</p>
+                </div>
+                
+                <h3>Follow-up Scheduling</h3>
+                <p>The system can help manage follow-up appointments:</p>
+                <ol>
+                    <li>From the recommendations section, click "Schedule Follow-up"</li>
+                    <li>Select a recommended timeframe or enter a custom date</li>
+                    <li>Add notes about the purpose of the follow-up</li>
+                    <li>Save the follow-up to the patient's profile</li>
+                </ol>
+            </section>
+
+            <section id="troubleshooting" class="section">
+                <h2>Troubleshooting</h2>
+                
+                <h3>Common Issues and Solutions</h3>
+                
+                <h4>Login Problems</h4>
+                <ul>
+                    <li>Ensure caps lock is off</li>
+                    <li>Clear browser cache and cookies</li>
+                    <li>Use the password reset feature if necessary</li>
+                </ul>
+                
+                <h4>Image Upload Issues</h4>
+                <ul>
+                    <li>Check that the file format is supported</li>
+                    <li>Ensure the file size is under the limit</li>
+                    <li>Try a different browser if problems persist</li>
+                </ul>
+                
+                <h4>Analysis Errors</h4>
+                <ul>
+                    <li>Verify image quality meets requirements</li>
+                    <li>Check internet connection stability</li>
+                    <li>Retry the analysis</li>
+                </ul>
+                
+                <h4>Report Generation Problems</h4>
+                <ul>
+                    <li>Ensure the analysis has completed successfully</li>
+                    <li>Check browser permissions for downloading files</li>
+                    <li>Try generating a different report format</li>
+                </ul>
+                
+                <h3>Error Messages</h3>
+                <p>The system provides specific error messages to help identify issues:</p>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Error Code</th>
+                                <th>Description</th>
+                                <th>Recommended Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Error 101</td>
+                                <td>Login authentication issue</td>
+                                <td>Verify credentials and try again or reset password</td>
+                            </tr>
+                            <tr>
+                                <td>Error 201</td>
+                                <td>Image quality insufficient</td>
+                                <td>Retake image with better focus/lighting</td>
+                            </tr>
+                            <tr>
+                                <td>Error 301</td>
+                                <td>Analysis processing error</td>
+                                <td>Check connection and retry or contact support</td>
+                            </tr>
+                            <tr>
+                                <td>Error 401</td>
+                                <td>Report generation failure</td>
+                                <td>Retry with different format or contact support</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="danger-box">
+                    <p><strong>For any error codes not listed, please contact technical support.</strong></p>
+                </div>
+            </section>
+
+            <section id="support-contact" class="section">
+                <h2>Support and Contact</h2>
+                
+                <h3>Technical Support</h3>
+                <p>For technical issues or questions:</p>
+                <ul>
+                    <li><strong>Email:</strong> support@myopiaai.com</li>
+                    <li><strong>Phone:</strong> +1-800-MYOPIA-AI (696-7424)</li>
+                    <li><strong>Hours:</strong> Monday to Friday, 9 AM - 5 PM (EST)</li>
+                </ul>
+                
+                <h3>Feedback and Suggestions</h3>
+                <p>We value your input on improving the system:</p>
+                <ol>
+                    <li>Click on "Feedback" in the bottom right corner of any screen</li>
+                    <li>Complete the feedback form</li>
+                    <li>Submit your suggestions</li>
+                </ol>
+                
+                <h3>Training Resources</h3>
+                <p>Additional training resources are available:</p>
+                <ul>
+                    <li><strong>Video tutorials:</strong> Access via the "Help" menu</li>
+                    <li><strong>Webinars:</strong> Schedule available in the "Training" section</li>
+                    <li><strong>Documentation:</strong> Downloadable PDFs in the "Resources" section</li>
+                </ul>
+                
+                <div class="highlight-box">
+                    <p><strong>Tip:</strong> Our support team is available for virtual training sessions. Contact us to schedule a personalized walkthrough of the system for your clinical team.</p>
+                </div>
+            </section>
+
+            <footer>
+                <p>&copy; 2025 MyopiaAI. All rights reserved.</p>
+                <p>Version 2.5.0</p>
+            </footer>
+        </main>
+    </div>
+
+    <a href="#" class="back-to-top">↑</a>
+
+    <script>
+        // Toggle sidebar on mobile
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+        // Highlight active nav item based on scroll position
+        window.addEventListener('scroll', function() {
+            let scrollPosition = window.scrollY;
+            
+            // Get all sections and nav links
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Find current section
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    // Remove active class from all links
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    
+                    // Add active class to corresponding link
+                    const correspondingLink = document.querySelector(`.nav-link[href="#${section.id}"]`);
+                    if (correspondingLink) {
+                        correspondingLink.classList.add('active');
+                    }
+                }
+            });
+            
+            // Show/hide back to top button
+            const backToTop = document.querySelector('.back-to-top');
+            if (scrollPosition > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        // Smooth scroll for navigation links
+        document.querySelectorAll('.nav-link, .back-to-top').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                let targetId = this.getAttribute('href');
+                if (targetId === '#') {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+                
+                // Close mobile sidebar after clicking
+                if (window.innerWidth < 992) {
+                    document.querySelector('.sidebar').classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
